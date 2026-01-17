@@ -1,0 +1,16 @@
+{
+  "name": "image-resizer-pro",
+  "version": "1.0",
+  "description": "Professional Image Resizer and Editor",
+  "main": "script.js",
+  "scripts": {
+    "start": "chrome --load-extension=.",
+    "test": "node test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^22.10.0"
+  }
+}

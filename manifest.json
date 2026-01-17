@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Image Resizer Pro - DICSC PY",
+  "version": "1.0",
+  "description": "Professional Image Resizer and Editor",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": ["activeTab"]
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Resizer Pro - DICSC PY</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="top-bar"></div>
+
+    <div class="app-container">
+        
+        <div class="controls">
+            
+            <div class="controls-content">
+                
+                <div class="header-row">
+                    <h2>Controllers</h2>
+                    <button id="btnAbout" class="btn-about">About</button>
+                </div>
+                
+                <div class="control-group">
+                    <label>Insert Image</label>
+                    <div class="slider-row">
+                        <input type="file" id="imgUpload" accept="image/png, image/jpeg, image/gif, image/webp, image/bmp">
+                        <button class="btn-mini btn-reset" id="imgReset" title="Remove Image">🗑</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Preset Scale</label>
+                    <select id="scaleSelect">
+                        <option value="0" selected>Image Selection</option>
+                        <option value="1">1. Passport Photos (35mm x 45mm)</option>
+                        <option value="2">2. Pan Photos (213px x 213px)</option>
+                        <option value="3">3. Pan Signature (400px x 200px)</option>
+                        <option value="4">4. PVC ID size (86mm x 54mm)</option>
+                        <option value="5">5. PY Job Photos (238px x 306px)</option>
+                        <option value="6">6. PY Job Signature (350px x 150px)</option>
+                        <option value="7">7. TN RC Photos (150px x 200px)</option>
+                        <option value="8">8. NEET PCS Photo (4in x 6in)</option>
+                        <option value="9">9. LLR & DL Photos : (413px x 531px)</option>
+                        <option value="10">10. LLR & DL Signature : (256px x 64px)</option>
+                        <option value="11">11. GPAT Signature (3.5cm x 1.5cm)</option>
+                        <option value="12">12. GPAT Thumb (LTI) (3.5cm x 1.5cm)</option>
+                        <option value="13">13. NEET PCS Photo (23px x 8px)</option>
+                    </select>
+                    
+                    <div class="dimensions-row" style="display: none;">
+                        <input type="number" id="customW" placeholder="W" value="0" min="0" max="10000">
+                        <span class="x-separator">x</span>
+                        <input type="number" id="customH" placeholder="H" value="0" min="0" max="10000">
+                        <select id="customUnit">
+                            <option value="px">Pix</option>
+                            <option value="mm">mm</option>
+                            <option value="cm">cm</option>
+                            <option value="in">Inches</option>
+                        </select>
+                    </div>
+                    <label for="presetName">Preset Name</label>
+                    <div class="dimensions-row">
+                        <input type="text" id="presetName" placeholder="Enter preset name...">
+                    </div>
+                    <div class="dimensions-row">
+                        <input type="number" id="newPresetW" placeholder="W">
+                        <input type="number" id="newPresetH" placeholder="H">
+                        <select id="newPresetUnit">
+                            <option value="px">Pix</option>
+                            <option value="mm">mm</option>
+                            <option value="cm">cm</option>
+                            <option value="in">Inches</option>
+                        </select>
+                    </div>
+                    <div class="dimensions-row">
+                        <input type="number" id="newPresetKB" placeholder="KB">
+                        <input type="number" id="newPresetDPI" placeholder="DPI">
+                    </div>
+                    <div class="btn-group preset-buttons">
+                        <button id="addPreset" class="btn-oval">Add</button>
+                        <button id="deletePreset" class="btn-oval">Delete</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Zoom & Rotation</label>
+                    
+                    <!-- Zoom Section -->
+                    <div style="margin-top: 10px;">
+                        <label for="zoomSlider" class="label-small" style="display: block; margin-bottom: 5px; width: auto; text-transform: none; color: #333;">Zoom (<span id="zoomValue">100%</span>)</label>
+                        <div class="slider-row">
+                            <input type="range" id="zoomSlider" min="1" max="500" value="100" step="1">
+                            <button class="btn-mini" id="zoomMinus" title="-1%">-</button>
+                            <button class="btn-mini" id="zoomPlus" title="+1%">+</button>
+                            <button class="btn-mini btn-reset" id="zoomReset" title="Reset Zoom">🗑</button>
+                        </div>
+                    </div>
+
+                    <!-- Rotation Section -->
+                    <div style="margin-top: 15px;">
+                        <label for="rotSlider" class="label-small" style="display: block; margin-bottom: 5px; width: auto; text-transform: none; color: #333;">Rotation (<span id="rotValue">0°</span>)</label>
+                        <div class="slider-row">
+                            <input type="range" id="rotSlider" min="-180" max="180" value="0" step="1">
+                            <button class="btn-mini" id="rotMinus" title="-0.25°">-</button>
+                            <button class="btn-mini" id="rotPlus" title="+0.25°">+</button>
+                            <button class="btn-mini btn-reset" id="rotReset" title="Reset Rotation">🗑</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Background Tools</label>
+                    
+                    <div class="bg-tool-row" style="margin-bottom: 15px;">
+                        
+                        <div class="bg-tool-group">
+                            <span class="bg-label">FILL</span>
+                            <input type="color" id="bgColor" value="#3A9BFF" class="color-input-square" title="Fill Color">
+                            <button class="btn-mini btn-reset" id="bgReset" title="Reset Fill">🗑</button>
+                        </div>
+
+                        <div class="bg-tool-group">
+                            <span class="bg-label">PICK</span>
+                            <button id="btnPickColor" class="btn-mini btn-reset" title="Pick Color">🖊️</button>
+                            <input type="color" id="removeColorDisplay" value="#3A9BFF" class="color-input-square" title="Color to Remove">
+                            <button class="btn-mini btn-reset" id="pickReset" title="Reset Pick">🗑</button>
+                        </div>
+
+                    </div>
+                    
+                    <div class="slider-row" style="margin-bottom: 5px;">
+                        <span class="label-small">Remove BG:</span>
+                        <input type="range" id="bgRemover" min="0" max="150" value="0">
+                        <button class="btn-mini btn-reset" id="bgRemoverReset" title="Reset Remover">🗑</button>
+                    </div>
+
+                    <div class="slider-row">
+                        <span class="label-small">Feather:</span>
+                        <input type="range" id="bgFeather" min="0" max="10" value="0" step="1">
+                        <button class="btn-mini btn-reset" id="bgFeatherReset" title="Reset Feather">🗑</button>
+                    </div>
+
+                    <small style="margin-top:2px; color:#999; font-size:10px;">Use Picker 🖊️ to select a color, then adjust strength</small>
+                </div>
+
+                <div class="control-group">
+                    <label>Eraser Tool</label>
+                    <div class="slider-row">
+                        <input type="range" id="eraserSlider" min="1" max="100" value="10">
+                        <button id="btnEraser" class="btn-mini btn-reset" title="Eraser">✏️</button>
+                        <button class="btn-mini btn-reset" id="eraserReset" title="Reset Eraser">🗑</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Color Correction</label>
+                    
+                    <div class="slider-row" style="margin-bottom:8px;">
+                        <select id="colorMode">
+                            <option value="color">Original Color</option>
+                            <option value="bw">Black & White</option>
+                        </select>
+                    </div>
+
+                    <div class="slider-row">
+                        <span class="label-small">Bright</span>
+                        <input type="range" id="brightnessSlider" min="-100" max="100" value="0">
+                        <button class="btn-mini btn-reset" id="brightnessReset" title="Reset Brightness">🗑</button>
+                    </div>
+
+                    <div class="slider-row">
+                        <span class="label-small">Contrast</span>
+                        <input type="range" id="contrastSlider" min="-100" max="100" value="0">
+                        <button class="btn-mini btn-reset" id="contrastReset" title="Reset Contrast">🗑</button>
+                    </div>
+
+                    <div class="slider-row">
+                        <span class="label-small">Sharp</span>
+                        <input type="range" id="sharpnessSlider" min="0" max="100" value="0">
+                        <button class="btn-mini btn-reset" id="sharpnessReset" title="Reset Sharpness">🗑</button>
+                    </div>
+
+                    <div class="slider-row">
+                        <span class="label-small">Midtone</span>
+                        <input type="range" id="midtoneSlider" min="-100" max="100" value="0" step="1">
+                        <button class="btn-mini btn-reset" id="midtoneReset" title="Reset Midtone">🗑</button>
+                    </div>
+
+                    <div class="slider-row">
+                        <span class="label-small">Hue</span>
+                        <input type="range" id="hueSlider" min="-180" max="180" value="0">
+                        <button class="btn-mini btn-reset" id="hueReset" title="Reset Hue">🗑</button>
+                    </div>
+                </div>
+
+                <div class="control-group download-section">
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <div style="flex: 1;">
+                            <label>Target Size (KB)</label>
+                            <input type="number" id="targetKB" value="5" min="5" max="5000">
+                        </div>
+                        <div style="flex: 1;">
+                            <label>Target DPI</label>
+                            <input type="number" id="targetDPI" value="72" min="72" max="600">
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button id="dlJpg">Download JPG</button>
+                        <button id="dlPng">Download PNG</button>
+                        <button id="btnGlobalReset" class="btn-reset-all">RESET ALL</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="footer">
+                DICSC EMBALAM PUDUCHERRY
+            </div>
+
+        </div>
+
+        <div class="preview-section">
+            <div class="canvas-container">
+                <canvas id="mainCanvas" width="2000" height="2000"></canvas>
+            </div>
+            <p class="canvas-size">Canvas Size: 2000px x 2000px</p>
+            <div id="aboutModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2>About Image Resizer Pro</h2>
+                    <ul class="features-list">
+                        <li>Image Resizing: Easily resize images to preset or custom dimensions.</li>
+                        <li>Preset Scales: Quickly select from a variety of preset sizes for common applications.</li>
+                        <li>Zoom & Rotate: Fine-tune your image's position and orientation.</li>
+                        <li>Background Removal: Remove image backgrounds with color picking and strength adjustment.</li>
+                        <li>Color Correction: Adjust brightness, contrast, hue, and more.</li>
+                        <li>Download Options: Download your resized image as a JPG or PNG.</li>
+                        <li>Target File Size: Set a target file size in KB for your downloads.</li>
+                        <li>DPI Control: Adjust the DPI of your downloaded image.</li>
+                    </ul>
+                    <p class="copyright">
+                        Copyright © DICSC EMBALAM PUDUCHERRY. All rights reserved.
+                        <br>
+                        Unauthorized copying, distribution, or modification of this program is strictly prohibited.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
